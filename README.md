@@ -58,19 +58,6 @@ fn rasterize_triangle(v0: Vec2, v1: Vec2, v2: Vec2, color: Color) {
 - **Draw horizontal lines** between boundaries
 - **Repeat** for all scanlines covering the triangle
 
-## Performance Characteristics
-> *"This is scanline algorithm. Very simple. Very fast. But on CPU this is slower than on GPU"* — @sawixy
-
-**Advantages:**
-- Simple to implement and understand
-- Efficient memory access pattern
-- Naturally handles triangle filling
-
-**Limitations:**
-- CPU-bound compared to GPU parallel rendering
-- Limited by single-threaded processing
-- Doesn't leverage modern hardware acceleration
-
 ## Use Cases
 - Software rendering engines
 - Educational purposes
