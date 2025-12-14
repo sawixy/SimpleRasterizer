@@ -14,10 +14,7 @@ struct State {
 }
 
 fn fragment_shader(pos: Vec3, state: State) -> Vec3 {
-    let depth = (pos.z + 1.0) * 0.5;
-    let brightness = 1.0 - depth * 0.8;
-    
-    Vec3::new(brightness, brightness, brightness)
+    Vec3::new(1.0, 0.0, 0.0)
 }
 
 fn vertex_shader(pos: Vec3, state: State) -> Vec3 {
@@ -46,45 +43,10 @@ fn vertex_shader(pos: Vec3, state: State) -> Vec3 {
 }
 
 fn main() {
-    let p0 = Vec3::new(-0.5, -0.5, -0.5);
-    let p1 = Vec3::new(0.5, -0.5, -0.5);
-    let p2 = Vec3::new(0.5, 0.5, -0.5);
-    let p3 = Vec3::new(-0.5, 0.5, -0.5);
-    let p4 = Vec3::new(-0.5, -0.5, 0.5);
-    let p5 = Vec3::new(0.5, -0.5, 0.5);
-    let p6 = Vec3::new(0.5, 0.5, 0.5);
-    let p7 = Vec3::new(-0.5, 0.5, 0.5);
-    
-    for i in 0..100 {
-        let time = i as f32 * 0.1;
-        
-        let mut rasterizer = Rasterizer::new(WIDTH, HEIGHT);
-        
-        rasterizer = rasterizer.add_triangle(Triangle::new([p4, p5, p6]));
-        rasterizer = rasterizer.add_triangle(Triangle::new([p4, p6, p7]));
-        
-        rasterizer = rasterizer.add_triangle(Triangle::new([p0, p2, p1]));
-        rasterizer = rasterizer.add_triangle(Triangle::new([p0, p3, p2]));
-        
-        rasterizer = rasterizer.add_triangle(Triangle::new([p1, p2, p6]));
-        rasterizer = rasterizer.add_triangle(Triangle::new([p1, p6, p5]));
-        
-        rasterizer = rasterizer.add_triangle(Triangle::new([p0, p7, p3]));
-        rasterizer = rasterizer.add_triangle(Triangle::new([p0, p4, p7]));
-        
-        rasterizer = rasterizer.add_triangle(Triangle::new([p3, p6, p2]));
-        rasterizer = rasterizer.add_triangle(Triangle::new([p3, p7, p6]));
-        
-        rasterizer = rasterizer.add_triangle(Triangle::new([p0, p1, p5]));
-        rasterizer = rasterizer.add_triangle(Triangle::new([p0, p5, p4]));
-        
-        rasterizer = rasterizer
-            .set_vertex_shader(vertex_shader)
-            .set_fragment_shader(fragment_shader);
-        
-        let image = rasterizer.rasterize(State { time });
-        let filename = format!("image-{i:03}.ppm");
-        image.save_to_file(&filename).expect("Failed to save");
-        println!("Generated {}", filename);
-    }
+    let mut rasterizer = Rasterizer::new(WIDTH, HEIGHT)
+        .set_vertex_shader(vertex_shader)
+        .set_fragment_shader(fragment_shader)
+        .add_triangle(Triangle::new([Vec3::new(0.0, 0.5, 1.0), Vec3::new(0.5, -0.5, 1.0), Vec3::new(-0.5, -0.5, 1.0)]));
+    let image = rasterizer.rasterize(State { time: 0.0 });
+    image.save_to_file("image.ppm").expect("Fail");
 }

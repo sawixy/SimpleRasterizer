@@ -4,6 +4,7 @@ pub struct Image {
     width: u32,
     height: u32,
     pub pixels: Vec<Vec3>,
+    pub depth: Vec<f32>,
 }
 
 impl Image {
@@ -12,6 +13,7 @@ impl Image {
             width,
             height,
             pixels: vec![Vec3::new(0.0, 0.0, 0.0); (height * width) as usize],
+            depth: vec![f32::INFINITY; (width * height) as usize],
         }
     }
 
