@@ -52,7 +52,6 @@ impl<T> Rasterizer<T> where T: Clone {
         let eps = 1e-6;
 
         for triangle in &self.triangles {
-            // Преобразуем в экранные координаты
             let v0 = vertex_to_screen_space(triangle.vertices[0], self.width, self.height);
             let v1 = vertex_to_screen_space(triangle.vertices[1], self.width, self.height);
             let v2 = vertex_to_screen_space(triangle.vertices[2], self.width, self.height);
